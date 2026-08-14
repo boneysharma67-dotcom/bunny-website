@@ -10,12 +10,13 @@ permissions:
   pages: write
   id-token: write
 
-    jobs:
+jobs:
   deploy:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -32,6 +33,11 @@ permissions:
       - name: Build
         run: npm run build
 
+      - name: Check dist
+        run: |
+          ls -la dist
+          find dist -maxdepth 2 -type f -print
+
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
@@ -42,4 +48,4 @@ permissions:
 
       - name: Deploy
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4   
